@@ -1,0 +1,37 @@
+connector Pin
+  Real v;
+  flow Real i;
+end Pin;
+model Ports0
+  Pin n;
+  Pin p;
+end Ports0;
+model Ports1
+  Pin p;
+end Ports1;
+model Study
+  Ports1 Ground1;
+  Ports0 IdealGTOThyristor1;
+  Ports0 IdealGTOThyristor2;
+  Ports0 IdealThyristor1;
+  Ports0 IdealThyristor2;
+  Ports0 R1;
+  Ports0 R2;
+  Ports0 R3;
+  Ports0 R4;
+  Ports0 SineVoltage1;
+equation
+  connect(IdealThyristor1.n, R3.p);
+  connect(Ground1.p, SineVoltage1.n);
+  connect(SineVoltage1.p, IdealThyristor1.p);
+  connect(IdealGTOThyristor1.n, R1.p);
+  connect(R3.n, R1.n);
+  connect(IdealGTOThyristor1.p, IdealThyristor1.p);
+  connect(IdealThyristor2.n, R2.p);
+  connect(IdealGTOThyristor2.n, R4.p);
+  connect(R2.n, R4.n);
+  connect(IdealGTOThyristor2.p, IdealThyristor2.p);
+  connect(R4.n, Ground1.p);
+  connect(R2.n, R1.n);
+  connect(SineVoltage1.p, IdealThyristor2.p);
+end Study;

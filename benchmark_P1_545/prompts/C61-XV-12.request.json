@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector EffortPort\n  Real effort;\n  flow Real flowRate;\nend EffortPort;\nmodel EffortSourceCore\n  parameter Real drive=2;\n  parameter Real slope=1;\n  EffortPort p;\n  Real x;\nequation\n  p.effort=drive+slope*x;\n  p.flowRate=x;\nend EffortSourceCore;\nmodel TunedLeft\n  extends EffortSourceCore(drive=8);\nend TunedLeft;\nmodel TunedRight\n  extends EffortSourceCore(drive=3);\nend TunedRight;\nmodel LeftWrapper\n  EffortPort port;\n  TunedLeft source;\nequation\n  connect(port,source.p);\nend LeftWrapper;\nmodel RightWrapper\n  EffortPort port;\n  TunedRight source;\nequation\n  connect(port,source.p);\nend RightWrapper;\nmodel AffineBridge\n  parameter Real k=2;\n  EffortPort a;\n  EffortPort b;\nequation\n  a.flowRate+b.flowRate=0;\n  a.effort-b.effort=k*a.flowRate;\nend AffineBridge;\nmodel AffineLoad\n  parameter Real gain=4;\n  parameter Real shift=0;\n  EffortPort p;\n  Real y;\nequation\n  p.effort=gain*y+shift;\n  p.flowRate=-y;\nend AffineLoad;\nmodel Study\n  LeftWrapper left;\n  RightWrapper right;\n  AffineBridge bridge;\n  AffineLoad probe(gain=4,shift=1);\n  AffineLoad sink(gain=5,shift=-1);\n  Real result;\nequation\n  result=probe.y;\n  connect(left.port,bridge.a);\n  connect(probe.p,bridge.a);\n  connect(right.port,bridge.b);\n  connect(sink.p,bridge.b);\nend Study;\n```\n\nQuestion:\nIn model Study, what is the exact rational value of result? Return an integer or a reduced fraction.\n\nTarget:\nresult\n\nAnswer format:\nUse an integer or a reduced fraction p/q with a positive denominator in the answer string.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

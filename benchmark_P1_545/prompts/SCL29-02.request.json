@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Pin\n  Real v;\n  flow Real i;\nend Pin;\nmodel Ports0\n  Pin n;\n  Pin p;\nend Ports0;\nmodel Ports1\n  Pin n1;\n  Pin n2;\n  Pin p1;\n  Pin p2;\nend Ports1;\nmodel Ports2\n  Pin p;\nend Ports2;\nmodel Ports3\n  Pin p1;\n  Pin p2;\n  Pin p3;\nend Ports3;\nmodel Study\n  Ports0 R1;\n  Ports0 R2;\n  Ports2 ground1;\n  Ports2 ground2;\n  Ports3 oLine1;\n  Ports3 oLine2;\n  Ports3 oLine3;\n  Ports3 oLine4;\n  Ports0 srcDistr;\n  Ports0 srcLump;\n  Ports1 tLine1;\n  Ports1 tLine2;\n  Ports1 tLine3;\n  Ports1 tLine4;\nequation\n  connect(oLine1.p1, srcLump.p);\n  connect(tLine1.p1, srcDistr.p);\n  connect(srcDistr.n, tLine1.n1);\n  connect(oLine1.p2, oLine2.p1);\n  connect(oLine2.p2, oLine3.p1);\n  connect(oLine3.p2, oLine4.p1);\n  connect(oLine4.p2, R1.p);\n  connect(tLine2.n1, tLine1.n2);\n  connect(tLine2.p1, tLine1.p2);\n  connect(tLine3.n1, tLine2.n2);\n  connect(tLine3.p1, tLine2.p2);\n  connect(tLine4.n1, tLine3.n2);\n  connect(tLine4.p1, tLine3.p2);\n  connect(srcLump.n, ground1.p);\n  connect(ground1.p, oLine1.p3);\n  connect(ground1.p, oLine2.p3);\n  connect(ground1.p, oLine3.p3);\n  connect(ground1.p, oLine4.p3);\n  connect(ground1.p, R1.n);\n  connect(tLine4.p2, R2.p);\n  connect(tLine4.n2, R2.n);\n  connect(srcDistr.n, ground2.p);\n  connect(ground2.p, tLine2.n2);\n  connect(ground2.p, tLine3.n2);\n  connect(ground2.p, tLine4.n2);\n  connect(ground2.p, tLine1.n2);\nend Study;\n```\n\nQuestion:\nList the primitive potential members in the connection set containing ground1.p.v.\n\nTarget:\nground1.p.v\n\nAnswer format:\nUse unique qualified paths in ascending ASCII order, joined by commas without spaces.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

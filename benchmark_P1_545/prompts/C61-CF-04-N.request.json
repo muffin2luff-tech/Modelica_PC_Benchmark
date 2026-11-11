@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector HeatPort\n  Real T;\n  flow Real Q_flow;\nend HeatPort;\nmodel Capacity\n  HeatPort p;\nend Capacity;\nmodel BoundaryBox\n  HeatPort right;\nend BoundaryBox;\nmodel Hub\n  HeatPort left;\n  BoundaryBox box;\n  Capacity a;\n  Capacity b;\nequation\n  connect(left,a.p);\n  connect(a.p,b.p);\n  connect(b.p,box.right);\nend Hub;\nmodel Study\n  Hub h;\nend Study;\n```\n\nQuestion:\nWithin the equation scope of model instance Study.h, return the canonical signed member vector for the primitive flow connection set generated there that contains h.left.Q_flow.\n\nTarget:\nh.left.Q_flow\n\nAnswer format:\nUse ascending path:integer entries joined by commas without spaces; coefficients must be primitive, nonzero, and oriented so the first coefficient is positive.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

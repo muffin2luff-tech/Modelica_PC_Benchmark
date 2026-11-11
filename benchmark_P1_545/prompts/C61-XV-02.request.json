@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector HeatPort\n  Real T;\n  flow Real Q_flow;\nend HeatPort;\nmodel HeatSourceCore\n  parameter Real bias=3;\n  parameter Real slope=1;\n  HeatPort p;\n  Real x;\nequation\n  p.T=bias+slope*x;\n  p.Q_flow=x;\nend HeatSourceCore;\nmodel TunedHeatSource\n  extends HeatSourceCore(bias=8);\nend TunedHeatSource;\nmodel Shell\n  HeatPort port;\n  TunedHeatSource source;\nequation\n  connect(port,source.p);\nend Shell;\nmodel ThermalLoad\n  parameter Real gain=5;\n  parameter Real shift=1;\n  HeatPort p;\n  Real y;\nequation\n  p.T=gain*y+shift;\n  p.Q_flow=-y;\nend ThermalLoad;\nmodel Reference\n  HeatPort p;\nequation\n  p.T=0;\nend Reference;\nmodel Study\n  Shell shell;\n  ThermalLoad left(gain=4,shift=1);\n  ThermalLoad right(gain=6,shift=2);\n  ThermalLoad anchor(gain=3,shift=0);\n  Reference ref;\n  Real result;\nequation\n  result=left.y;\n  connect(shell.port,left.p);\n  connect(shell.port,right.p);\n  connect(ref.p,anchor.p);\nend Study;\n```\n\nQuestion:\nIn model Study, what is the exact rational value of result? Return an integer or a reduced fraction.\n\nTarget:\nresult\n\nAnswer format:\nUse an integer or a reduced fraction p/q with a positive denominator in the answer string.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

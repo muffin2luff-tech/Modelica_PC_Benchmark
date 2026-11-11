@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nmodel Study\n  parameter Real c = 2;\n  parameter Real d = 3;\n  parameter Real s_rel0 = 1;\n  Real f_c;\n  Real f_d;\n  Real f;\n  Real s_rel;\n  Real v_rel;\nequation\n  f_c = c * ( s_rel - s_rel0 );\n  f_d = d * v_rel;\n  f = f_c + f_d;\n  s_rel = 4;\n  v_rel = 2;\nend Study;\n```\n\nQuestion:\nIn model Study, what is the exact rational value of f? Return an integer or a reduced fraction.\n\nTarget:\nf\n\nAnswer format:\nUse an integer or a reduced fraction p/q with a positive denominator in the answer string.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

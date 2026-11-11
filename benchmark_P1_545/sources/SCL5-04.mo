@@ -1,0 +1,48 @@
+connector Port
+  Real s;
+  flow Real f;
+end Port;
+model PortType0
+  Port flange;
+end PortType0;
+model PortType1
+  Port flange_a;
+  Port flange_b;
+end PortType1;
+model Study
+  PortType1 outerContactA;
+  PortType1 outerContactB;
+  PortType1 springPlateA;
+  PortType1 springPlateB;
+  PortType1 spring;
+  PortType1 housing;
+  PortType1 rod1;
+  PortType1 rod2;
+  PortType1 rod3;
+  PortType1 rod4;
+  PortType1 innerContactA;
+  PortType1 innerContactB;
+  PortType1 friction;
+  PortType1 spool;
+  PortType0 force;
+  PortType0 fixedLe;
+equation
+  connect(outerContactA.flange_b, springPlateA.flange_a);
+  connect(springPlateA.flange_b, spring.flange_a);
+  connect(spring.flange_b, springPlateB.flange_a);
+  connect(springPlateB.flange_b, outerContactB.flange_a);
+  connect(outerContactB.flange_b, housing.flange_b);
+  connect(springPlateA.flange_b, rod1.flange_a);
+  connect(innerContactA.flange_a, rod3.flange_a);
+  connect(innerContactA.flange_b, rod1.flange_b);
+  connect(rod2.flange_a, innerContactB.flange_a);
+  connect(rod4.flange_b, innerContactB.flange_b);
+  connect(friction.flange_b, rod3.flange_a);
+  connect(rod3.flange_b, rod4.flange_a);
+  connect(rod2.flange_b, springPlateB.flange_a);
+  connect(spool.flange_a, rod4.flange_a);
+  connect(force.flange, spool.flange_a);
+  connect(outerContactA.flange_a, fixedLe.flange);
+  connect(housing.flange_a, fixedLe.flange);
+  connect(friction.flange_a, fixedLe.flange);
+end Study;

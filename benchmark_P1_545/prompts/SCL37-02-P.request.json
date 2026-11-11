@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nmodel Derivative\n  parameter Real k = 1;\n  parameter Real R1 = 1000;\n  parameter Real scaledR = k * R1;\n  parameter Real R2 = scaledR;\nend Derivative;\nmodel Study\n  extends Derivative(k = 3, R1 = 1000);\nend Study;\n```\n\nQuestion:\nIn model Study, what is the exact rational value of R2? Return an integer or a reduced fraction.\n\nTarget:\nR2\n\nAnswer format:\nUse an integer or a reduced fraction p/q with a positive denominator in the answer string.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

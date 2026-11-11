@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Pin\n  Real v;\n  flow Real i;\nend Pin;\nmodel TwoPin\n  Pin p;\n  Pin n;\nend TwoPin;\nmodel Ground\n  Pin p;\nend Ground;\nmodel MOS\n  Pin S;\n  Pin D;\n  Pin B;\n  Pin G;\nend MOS;\nmodel Study\n  TwoPin Sin;\n  TwoPin V;\n  TwoPin Capacitor1;\n  MOS H_PMOS;\n  MOS H_NMOS;\n  Ground G;\nequation\n  connect(Sin.n, G.p);\n  connect(Capacitor1.n, G.p);\n  connect(H_PMOS.S, H_NMOS.D);\n  connect(H_NMOS.D, Capacitor1.p);\n  connect(H_NMOS.B, H_NMOS.S);\n  connect(H_NMOS.S, G.p);\n  connect(H_PMOS.B, H_PMOS.D);\n  connect(V.p, H_PMOS.D);\n  connect(V.n, G.p);\n  connect(H_NMOS.G, Sin.p);\n  connect(H_PMOS.G, Sin.p);\nend Study;\n```\n\nQuestion:\nAre Sin.p.v,V.p.v in the same primitive potential connection set? Return true or false.\n\nTarget:\nSin.p.v,V.p.v\n\nAnswer format:\nUse exactly true or false in the answer string.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

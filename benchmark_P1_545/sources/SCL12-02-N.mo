@@ -1,0 +1,55 @@
+connector Pin
+  Real v;
+  flow Real i;
+end Pin;
+model TwoPin
+  Pin p;
+  Pin n;
+end TwoPin;
+model Ground
+  Pin p;
+end Ground;
+model Transistor
+  Pin B;
+  Pin C;
+  Pin E;
+end Transistor;
+model Study
+  TwoPin V1;
+  TwoPin R1;
+  TwoPin RI;
+  TwoPin V;
+  TwoPin V2;
+  TwoPin R2;
+  TwoPin C1;
+  TwoPin C2;
+  TwoPin C3;
+  Ground Gnd1;
+  Ground Gnd;
+  Ground Gnd2;
+  Ground Gnd7;
+  Ground Gnd6;
+  Ground Gnd5;
+  Ground Gnd3;
+  Ground Gnd4;
+  Transistor T1;
+  Transistor T2;
+equation
+  connect(Gnd1.p, V1.n);
+  connect(V1.p, R1.p);
+  connect(RI.n, V.p);
+  connect(Gnd.p, V.n);
+  connect(V2.p, R2.p);
+  connect(Gnd2.p, V2.n);
+  connect(Gnd7.p, C1.n);
+  connect(C2.p, RI.p);
+  connect(Gnd6.p, C2.n);
+  connect(C3.p, R2.n);
+  connect(C1.p, R1.n);
+  connect(Gnd5.p, C3.n);
+  connect(T1.B, R1.n);
+  connect(T1.E, Gnd3.p);
+  connect(RI.p, T1.C);
+  connect(T2.B, R2.n);
+  connect(T2.E, Gnd4.p);
+end Study;

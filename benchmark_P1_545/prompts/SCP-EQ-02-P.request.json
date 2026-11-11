@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "content": "Analyze the supplied Modelica source and return only valid JSON.",
+      "role": "system"
+    },
+    {
+      "content": "Within instance w of model Scope in Study, consider only connect equations written directly in Scope (not connect equations declared within component classes). Determine the canonical signed coefficient vector for the primitive flow connection set containing w.bus.a.f. Include every member of that scope-local set, sort paths lexicographically, reduce any global common factor, and orient the vector so the first coefficient is positive. Return the answer as comma-separated path:coefficient pairs.\n\nModelica source:\n```modelica\nconnector T08\n  Real v;\n  flow Real f;\nend T08;\n\nconnector T21\n  T08 a;\nend T21;\n\nconnector T04\n  T08 a;\n  T08 b;\nend T04;\n\nconnector T17\n  T21 branch;\nend T17;\n\nconnector T10\n  T21 left;\n  T21 right;\nend T10;\n\nmodel T03\n  T08 a;\n  Real x;\nequation\n  a.v = x;\n  a.f = x;\nend T03;\n\nmodel T15\n  T08 a;\n  T08 b;\n  Real xa;\n  Real xb;\nequation\n  a.v = xa;\n  a.f = xa;\n  b.v = xb;\n  b.f = xb;\nend T15;\n\nmodel T06\n  T21 branch;\n  Real x;\nequation\n  branch.a.v = x;\n  branch.a.f = x;\nend T06;\n\nmodel T19\n  T21 left;\n  T21 right;\n  Real xleft;\n  Real xright;\nequation\n  left.a.v = xleft;\n  left.a.f = xleft;\n  right.a.v = xright;\n  right.a.f = xright;\nend T19;\n\nmodel T12\n  T08 p;\n  Real x;\nequation\n  p.v = x;\n  p.f = x;\nend T12;\n\nmodel T01\n  T08 port;\n  T12 core;\nequation\n  connect(port, core.p);\nend T01;\n\nmodel Scope\n  T12 right;\n  T12 left;\n  T04 bus;\n  T21 anchor;\nequation\n  connect(right.p, bus.b);\n  connect(left.p, right.p);\n  connect(bus.a, left.p);\n  connect(anchor.a, bus.a);\nend Scope;\n\nmodel Study\n  Scope w;\nend Study;\n```\n\nReturn exactly: {\"answer\":\"...\"}",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "type": "json_object"
+  }
+}

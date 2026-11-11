@@ -1,0 +1,38 @@
+connector Port
+  Real v;
+  flow Real i;
+end Port;
+model PortType0
+  Port p;
+end PortType0;
+model PortType1
+  Port p;
+  Port n;
+end PortType1;
+model Study
+  PortType1 sineVoltage;
+  PortType1 inductor1;
+  PortType1 capacitor1;
+  PortType1 resistor1;
+  PortType1 currentSensor1;
+  PortType0 ground1;
+  PortType1 cosineVoltage;
+  PortType1 inductor2;
+  PortType1 capacitor2;
+  PortType1 resistor2;
+  PortType1 currentSensor2;
+  PortType0 ground2;
+equation
+  connect(sineVoltage.p, inductor1.p);
+  connect(inductor1.n, capacitor1.p);
+  connect(capacitor1.n, resistor1.p);
+  connect(sineVoltage.n, ground1.p);
+  connect(currentSensor1.p, resistor1.n);
+  connect(ground1.p, currentSensor1.n);
+  connect(cosineVoltage.p, inductor2.p);
+  connect(inductor2.n, capacitor2.p);
+  connect(capacitor2.n, resistor2.p);
+  connect(cosineVoltage.n, ground2.p);
+  connect(currentSensor2.p, resistor2.n);
+  connect(ground2.p, currentSensor2.n);
+end Study;

@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector PressurePort\n  Real p;\n  flow Real q;\nend PressurePort;\nmodel Reference\n  PressurePort port;\nequation\n  port.p=0;\nend Reference;\nmodel PumpCore\n  parameter Real head=6;\n  parameter Real internalR=1;\n  PressurePort a;\n  PressurePort b;\nequation\n  a.q+b.q=0;\n  a.p-b.p=head+internalR*a.q;\nend PumpCore;\nmodel TunedPump\n  extends PumpCore(head=8);\nend TunedPump;\nmodel Restriction\n  parameter Real r=2;\n  PressurePort a;\n  PressurePort b;\nequation\n  a.q+b.q=0;\n  a.p-b.p=r*a.q;\nend Restriction;\nmodel Study\n  Reference ref;\n  TunedPump pump;\n  Restriction left(r=2);\n  Restriction right(r=4);\n  Real result;\nequation\n  result=left.a.q;\n  connect(pump.a,left.a);\n  connect(left.a,right.a);\n  connect(pump.b,left.b);\n  connect(left.b,right.b);\n  connect(pump.b,ref.port);\nend Study;\n```\n\nQuestion:\nIn model Study, what is the exact rational value of result? Return an integer or a reduced fraction.\n\nTarget:\nresult\n\nAnswer format:\nUse an integer or a reduced fraction p/q with a positive denominator in the answer string.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Pin\n  Real v;\n  flow Real i;\nend Pin;\nmodel Ports0\n  Pin flange;\nend Ports0;\nmodel Ports1\n  Pin flange;\n  Pin support;\nend Ports1;\nmodel Ports2\n  Pin flange_a;\n  Pin flange_b;\nend Ports2;\nmodel Ports3\n  Pin flange_a;\n  Pin flange_b;\n  Pin support;\nend Ports3;\nmodel Study\n  Ports2 Inertia1;\n  Ports2 Inertia2;\n  Ports0 fixed;\n  Ports3 gear;\n  Ports1 torque1;\n  Ports1 torque2;\nequation\n  connect(Inertia1.flange_b, gear.flange_a);\n  connect(gear.flange_b, Inertia2.flange_a);\n  connect(torque1.flange, Inertia1.flange_a);\n  connect(torque2.flange, Inertia2.flange_b);\n  connect(fixed.flange, gear.support);\n  connect(fixed.flange, torque1.support);\n  connect(fixed.flange, torque2.support);\nend Study;\n```\n\nQuestion:\nList the primitive potential members in the connection set containing fixed.flange.v.\n\nTarget:\nfixed.flange.v\n\nAnswer format:\nUse unique qualified paths in ascending ASCII order, joined by commas without spaces.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

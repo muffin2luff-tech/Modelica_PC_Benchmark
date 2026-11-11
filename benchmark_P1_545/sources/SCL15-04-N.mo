@@ -1,0 +1,31 @@
+connector Pin
+  Real v;
+  flow Real i;
+end Pin;
+model Ports0
+  Pin n;
+  Pin p;
+end Ports0;
+model Ports1
+  Pin p;
+end Ports1;
+model Study
+  Ports1 Ground1;
+  Ports1 Ground2;
+  Ports0 R1;
+  Ports0 R2;
+  Ports0 R3;
+  Ports0 R4;
+  Ports0 R5;
+  Ports0 SineVoltage1;
+  Ports0 VariableResistor;
+equation
+  connect(R1.n, R2.p);
+  connect(R2.n, R3.p);
+  connect(R4.n, VariableResistor.p);
+  connect(VariableResistor.n, R5.p);
+  connect(R3.n, Ground2.p);
+  connect(Ground2.p, R5.n);
+  connect(SineVoltage1.p, Ground1.p);
+  connect(SineVoltage1.n, R1.p);
+end Study;

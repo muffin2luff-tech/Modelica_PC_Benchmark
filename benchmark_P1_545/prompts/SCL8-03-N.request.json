@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nmodel Study\n  parameter Real ratio = 2;\n  Real phi_a;\n  Real phi_b;\n  Real flange_a_phi;\n  Real flange_b_phi;\n  Real phi_support;\n  Real flange_a_tau;\n  Real flange_b_tau;\n  Real tauLoss;\nequation\n  phi_a = flange_a_phi - phi_support;\n  phi_b = flange_b_phi - phi_support;\n  phi_a = ratio * phi_b;\n  0 = flange_b_tau + ratio * ( flange_a_tau - tauLoss );\n  flange_a_phi = 5;\n  flange_b_phi = 3;\n  phi_support = 1;\n  flange_a_tau = 4;\n  tauLoss = 2;\nend Study;\n```\n\nQuestion:\nIs the relation flange_b_tau=-6 entailed by the static equation system? Return true or false.\n\nTarget:\nflange_b_tau=-6\n\nAnswer format:\nUse exactly true or false in the answer string.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

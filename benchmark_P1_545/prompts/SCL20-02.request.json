@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Pin\n  Real v;\n  flow Real i;\nend Pin;\nmodel Ports0\n  Pin flange;\nend Ports0;\nmodel Ports1\n  Pin flange;\n  Pin support;\nend Ports1;\nmodel Ports2\n  Pin flange_a;\n  Pin flange_b;\nend Ports2;\nmodel Ports3\n  Pin flange_a;\n  Pin flange_b;\n  Pin support;\nend Ports3;\nmodel Study\n  Ports2 Inertia1;\n  Ports2 Inertia2;\n  Ports3 bearingFriction;\n  Ports0 fixed;\n  Ports3 gear;\n  Ports1 torque1;\n  Ports1 torque2;\nequation\n  connect(torque2.flange, Inertia2.flange_b);\n  connect(Inertia2.flange_a, gear.flange_b);\n  connect(gear.flange_a, Inertia1.flange_b);\n  connect(Inertia1.flange_a, bearingFriction.flange_b);\n  connect(bearingFriction.flange_a, torque1.flange);\n  connect(gear.support, fixed.flange);\n  connect(fixed.flange, torque2.support);\n  connect(fixed.flange, bearingFriction.support);\n  connect(torque1.support, fixed.flange);\nend Study;\n```\n\nQuestion:\nReturn the canonical signed member vector for the primitive flow connection set containing bearingFriction.support.i.\n\nTarget:\nbearingFriction.support.i\n\nAnswer format:\nUse ascending path:integer entries joined by commas without spaces; coefficients must be primitive, nonzero, and oriented so the first coefficient is positive.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

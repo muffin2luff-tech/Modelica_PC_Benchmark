@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nmodel Study\n  Real a;\n  Real b;\n  Real c;\n  Real d;\n  Real e;\nequation\n  2*a + b = 9;\n  b - c = 3;\n  c + d = 5;\n  d - e = 1;\nend Study;\n```\n\nQuestion:\nIs the relation 2*a + 2*c + e = 10 entailed by the static equation system? Return true or false.\n\nTarget:\n2*a + 2*c + e = 10\n\nAnswer format:\nUse exactly true or false in the answer string.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

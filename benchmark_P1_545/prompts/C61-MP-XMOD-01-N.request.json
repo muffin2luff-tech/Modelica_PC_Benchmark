@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Pin\n  Real v;\n  flow Real i;\nend Pin;\nmodel BaseR\n  parameter Real k=2;\n  Pin p;\n  Real x;\nequation\n  p.v=12;\n  p.i=k*x;\nend BaseR;\nmodel TunedR\n  extends BaseR(k=4);\nend TunedR;\nmodel Load\n  Pin p;\nequation\n  p.i=-6;\nend Load;\nmodel Study\n  TunedR driver(k=8);\n  Load load;\n  Real result;\nequation\n  result=driver.x;\n  connect(driver.p,load.p);\nend Study;\n```\n\nQuestion:\nIn model Study, what is the exact rational value of result? Return an integer or a reduced fraction.\n\nTarget:\nresult\n\nAnswer format:\nUse an integer or a reduced fraction p/q with a positive denominator in the answer string.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

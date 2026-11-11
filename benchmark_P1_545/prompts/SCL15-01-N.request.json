@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Pin\n  Real v;\n  flow Real i;\nend Pin;\nmodel Ports0\n  Pin n;\n  Pin p;\nend Ports0;\nmodel Ports1\n  Pin p;\nend Ports1;\nmodel Study\n  Ports1 Ground1;\n  Ports0 Ideal;\n  Ports0 R1;\n  Ports0 R2;\n  Ports0 R3;\n  Ports0 SineVoltage1;\n  Ports0 SineVoltage2;\n  Ports0 SineVoltage3;\n  Ports0 With_Ron_Goff;\n  Ports0 With_Ron_Goff_Vknee;\nequation\n  connect(Ground1.p, SineVoltage1.n);\n  connect(Ideal.n, R1.p);\n  connect(With_Ron_Goff.n, R2.p);\n  connect(With_Ron_Goff_Vknee.n, R3.p);\n  connect(R1.n, R2.n);\n  connect(R2.n, R3.n);\n  connect(R3.n, Ground1.p);\n  connect(SineVoltage2.p, Ideal.p);\n  connect(SineVoltage2.n, Ground1.p);\n  connect(SineVoltage1.p, With_Ron_Goff.p);\n  connect(With_Ron_Goff_Vknee.p, SineVoltage3.p);\nend Study;\n```\n\nQuestion:\nReturn the canonical signed member vector for the primitive flow connection set containing Ground1.p.i.\n\nTarget:\nGround1.p.i\n\nAnswer format:\nUse ascending path:integer entries joined by commas without spaces; coefficients must be primitive, nonzero, and oriented so the first coefficient is positive.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Port\n  Real e;\n  flow Real f;\nend Port;\nmodel SourceCore\n  parameter Real bias=3;\n  parameter Real slope=1;\n  Port p;\n  Real x;\nequation\n  p.e=bias+slope*x;\n  p.f=x;\nend SourceCore;\nmodel TunedSource\n  extends SourceCore;\nend TunedSource;\nmodel Shell\n  Port port;\n  TunedSource source(bias=7);\nequation\n  connect(port,source.p);\nend Shell;\nmodel Load\n  parameter Real gain=5;\n  parameter Real shift=1;\n  Port p;\n  Real y;\nequation\n  p.e=gain*y+shift;\n  p.f=-y;\nend Load;\nmodel Reference\n  Port p;\nequation\n  p.e=0;\nend Reference;\nmodel Study\n  Shell shell;\n  SourceCore assist(bias=2,slope=2);\n  Load left(gain=5,shift=1);\n  Load right(gain=4,shift=2);\n  Load anchor(gain=3,shift=0);\n  Reference ref;\n  Real result;\nequation\n  result=left.y;\n  connect(shell.port,assist.p);\n  connect(shell.port,left.p);\n  connect(shell.port,right.p);\n  connect(ref.p,anchor.p);\nend Study;\n```\n\nQuestion:\nIn model Study, what is the exact rational value of result? Return an integer or a reduced fraction.\n\nTarget:\nresult\n\nAnswer format:\nUse an integer or a reduced fraction p/q with a positive denominator in the answer string.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

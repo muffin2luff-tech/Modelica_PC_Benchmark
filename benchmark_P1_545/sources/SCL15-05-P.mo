@@ -1,0 +1,30 @@
+connector Pin
+  Real v;
+  flow Real i;
+end Pin;
+model Ports0
+  Pin n;
+  Pin p;
+end Ports0;
+model Ports1
+  Pin p;
+end Ports1;
+model Study
+  Ports0 currentSensor1;
+  Ports0 currentSensor2;
+  Ports1 ground1;
+  Ports1 ground2;
+  Ports0 lightning1;
+  Ports0 lightning2;
+  Ports0 resistor1;
+  Ports0 resistor2;
+equation
+  connect(ground2.p, lightning2.p);
+  connect(ground1.p, resistor1.n);
+  connect(ground2.p, resistor2.n);
+  connect(currentSensor1.n, resistor1.p);
+  connect(lightning2.n, currentSensor2.p);
+  connect(currentSensor2.n, resistor2.p);
+  connect(lightning1.n, ground1.p);
+  connect(lightning1.p, currentSensor1.p);
+end Study;

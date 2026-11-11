@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Pin\n  Real v;\n  flow Real i;\nend Pin;\nmodel Ports0\n  Pin n;\n  Pin p;\nend Ports0;\nmodel Ports1\n  Pin p;\nend Ports1;\nmodel Study\n  Ports1 Ground1;\n  Ports0 IdealGTOThyristor1;\n  Ports0 IdealGTOThyristor2;\n  Ports0 IdealThyristor1;\n  Ports0 IdealThyristor2;\n  Ports0 R1;\n  Ports0 R2;\n  Ports0 R3;\n  Ports0 R4;\n  Ports0 SineVoltage1;\nequation\n  connect(IdealThyristor1.n, R3.p);\n  connect(Ground1.p, SineVoltage1.n);\n  connect(SineVoltage1.p, IdealThyristor1.p);\n  connect(IdealGTOThyristor1.n, R1.p);\n  connect(R3.n, R1.n);\n  connect(IdealGTOThyristor1.p, IdealThyristor1.p);\n  connect(IdealThyristor2.n, R2.p);\n  connect(IdealGTOThyristor2.n, R4.p);\n  connect(R2.n, R4.n);\n  connect(IdealGTOThyristor2.p, IdealThyristor2.p);\n  connect(R4.n, Ground1.p);\n  connect(SineVoltage1.p, IdealThyristor2.p);\nend Study;\n```\n\nQuestion:\nList the primitive potential members in the connection set containing R1.n.v.\n\nTarget:\nR1.n.v\n\nAnswer format:\nUse unique qualified paths in ascending ASCII order, joined by commas without spaces.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

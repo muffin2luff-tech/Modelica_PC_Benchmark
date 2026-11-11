@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nmodel Study\n  parameter Real L1 = 2;\n  parameter Real L2 = 3;\n  parameter Real M = 1;\n  Real di1;\n  Real di2;\n  Real v1;\n  Real v2;\n  Real dv;\nequation\n  v1 = L1 * di1 + M * di2;\n  2 * ( dv ) = 2 * ( ( L1 - M ) * di1 + ( M - L2 ) * di2 );\n  v2 = v1 - dv;\n  di1 = 1;\n  di2 = 2;\n  v1 = 4;\n  v2 = 7;\nend Study;\n```\n\nQuestion:\nDoes the static rational equation system have at least one real solution? Return true or false.\n\nTarget:\nfull_constraint_system\n\nAnswer format:\nUse exactly true or false in the answer string.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

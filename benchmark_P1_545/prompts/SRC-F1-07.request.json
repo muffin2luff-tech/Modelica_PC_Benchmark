@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Pin\n  Real v;\n  flow Real i;\nend Pin;\nmodel TwoTerminal\n  Pin p;\n  Pin n;\nend TwoTerminal;\nmodel Transformer\n  Pin p1;\n  Pin n1;\n  Pin p2;\n  Pin n2;\nend Transformer;\nmodel Ground\n  Pin p;\nend Ground;\nmodel Study\n  Transformer basicTransformer;\n  TwoTerminal sineVoltage1;\n  TwoTerminal resistor11;\n  TwoTerminal resistor12;\n  TwoTerminal load1;\n  Ground ground11;\n  Ground ground12;\nequation\n  connect(sineVoltage1.n, ground11.p);\n  connect(sineVoltage1.p, resistor11.p);\n  connect(load1.n, ground12.p);\n  connect(resistor12.n, load1.p);\n  connect(ground11.p, basicTransformer.n1);\n  connect(basicTransformer.n2, ground12.p);\n  connect(basicTransformer.p1, resistor11.n);\n  connect(basicTransformer.p2, resistor12.p);\nend Study;\n```\n\nQuestion:\nAre basicTransformer.p1.v,basicTransformer.p2.v in the same primitive potential connection set? Return true or false.\n\nTarget:\nbasicTransformer.p1.v,basicTransformer.p2.v\n\nAnswer format:\nUse exactly true or false in the answer string.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Pin\n  Real v;\n  flow Real i;\nend Pin;\nmodel TwoTerminal\n  Pin p;\n  Pin n;\nend TwoTerminal;\nmodel Ground\n  Pin p;\nend Ground;\nmodel Study\n  TwoTerminal L;\n  TwoTerminal Ro;\n  TwoTerminal C1;\n  TwoTerminal C2;\n  TwoTerminal G;\n  TwoTerminal Nr;\n  Ground Gnd;\nequation\n  connect(Ro.p, L.n);\n  connect(G.p, C2.p);\n  connect(G.p, L.p);\n  connect(Nr.p, G.n);\n  connect(G.n, C1.p);\n  connect(Gnd.p, Ro.n);\n  connect(Gnd.p, C2.n);\n  connect(C1.n, Gnd.p);\n  connect(Nr.n, Gnd.p);\nend Study;\n```\n\nQuestion:\nAre L.p.v,Nr.p.v in the same primitive potential connection set? Return true or false.\n\nTarget:\nL.p.v,Nr.p.v\n\nAnswer format:\nUse exactly true or false in the answer string.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

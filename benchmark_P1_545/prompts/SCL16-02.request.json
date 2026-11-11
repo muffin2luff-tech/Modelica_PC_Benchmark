@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Pin\n  Real v;\n  flow Real i;\nend Pin;\nmodel Ports0\n  Pin in_n;\n  Pin in_p;\n  Pin out;\nend Ports0;\nmodel Ports1\n  Pin n;\n  Pin p;\nend Ports1;\nmodel Ports2\n  Pin p;\nend Ports2;\nmodel Study\n  Ports1 c;\n  Ports2 ground;\n  Ports0 opAmp1;\n  Ports0 opAmp2;\n  Ports1 r;\n  Ports1 r1;\n  Ports1 r2;\n  Ports1 vOutRectangle;\n  Ports1 vOutTriangle;\nequation\n  connect(opAmp1.out, r2.n);\n  connect(opAmp1.in_p, r2.p);\n  connect(opAmp1.in_n, ground.p);\n  connect(opAmp1.out, r.p);\n  connect(r.n, c.n);\n  connect(c.p, opAmp2.out);\n  connect(ground.p, opAmp2.in_p);\n  connect(c.n, opAmp2.in_n);\n  connect(r2.p, r1.p);\n  connect(opAmp2.out, r1.n);\n  connect(opAmp1.out, vOutRectangle.p);\n  connect(ground.p, vOutRectangle.n);\n  connect(opAmp2.out, vOutTriangle.p);\n  connect(ground.p, vOutTriangle.n);\nend Study;\n```\n\nQuestion:\nReturn the canonical signed member vector for the primitive flow connection set containing opAmp1.out.i.\n\nTarget:\nopAmp1.out.i\n\nAnswer format:\nUse ascending path:integer entries joined by commas without spaces; coefficients must be primitive, nonzero, and oriented so the first coefficient is positive.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

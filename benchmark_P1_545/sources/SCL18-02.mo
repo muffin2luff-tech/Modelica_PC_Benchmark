@@ -1,0 +1,36 @@
+connector Pin
+  Real v;
+  flow Real i;
+end Pin;
+model Ports0
+  Pin flange;
+end Ports0;
+model Ports1
+  Pin flange;
+  Pin support;
+end Ports1;
+model Ports2
+  Pin flange_a;
+  Pin flange_b;
+end Ports2;
+model Ports3
+  Pin flange_a;
+  Pin flange_b;
+  Pin support;
+end Ports3;
+model Study
+  Ports2 Inertia1;
+  Ports2 Inertia2;
+  Ports0 fixed;
+  Ports3 gear;
+  Ports1 torque1;
+  Ports1 torque2;
+equation
+  connect(Inertia1.flange_b, gear.flange_a);
+  connect(gear.flange_b, Inertia2.flange_a);
+  connect(torque1.flange, Inertia1.flange_a);
+  connect(torque2.flange, Inertia2.flange_b);
+  connect(fixed.flange, gear.support);
+  connect(fixed.flange, torque1.support);
+  connect(fixed.flange, torque2.support);
+end Study;

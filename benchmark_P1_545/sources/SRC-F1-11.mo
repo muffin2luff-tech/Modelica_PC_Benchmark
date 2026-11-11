@@ -1,0 +1,32 @@
+connector Flange
+  Real s;
+  flow Real f;
+end Flange;
+model Element
+  Flange flange_a;
+  Flange flange_b;
+end Element;
+model Fixed
+  Flange flange;
+end Fixed;
+model Study
+  Element s1;
+  Element s2;
+  Element m1;
+  Element m2;
+  Element m3;
+  Element m4;
+  Element sd1;
+  Element sd2;
+  Fixed fixed1;
+  Fixed fixed2;
+equation
+  connect(s2.flange_a, fixed2.flange);
+  connect(s1.flange_a, fixed1.flange);
+  connect(m1.flange_a, s1.flange_b);
+  connect(sd1.flange_a, m1.flange_b);
+  connect(m2.flange_a, sd1.flange_b);
+  connect(m4.flange_a, sd2.flange_b);
+  connect(sd2.flange_a, m3.flange_b);
+  connect(m3.flange_a, s2.flange_b);
+end Study;

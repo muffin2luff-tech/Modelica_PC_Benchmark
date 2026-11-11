@@ -1,0 +1,30 @@
+connector Pin
+  Real v;
+  flow Real i;
+end Pin;
+model TwoTerminal
+  Pin p;
+  Pin n;
+end TwoTerminal;
+model Ground
+  Pin p;
+end Ground;
+model Study
+  TwoTerminal L;
+  TwoTerminal Ro;
+  TwoTerminal C1;
+  TwoTerminal C2;
+  TwoTerminal G;
+  TwoTerminal Nr;
+  Ground Gnd;
+equation
+  connect(L.n, Ro.p);
+  connect(C2.p, G.p);
+  connect(L.p, G.p);
+  connect(G.n, Nr.p);
+  connect(C1.p, G.n);
+  connect(Ro.n, Gnd.p);
+  connect(C2.n, Gnd.p);
+  connect(Gnd.p, C1.n);
+  connect(Gnd.p, Nr.n);
+end Study;

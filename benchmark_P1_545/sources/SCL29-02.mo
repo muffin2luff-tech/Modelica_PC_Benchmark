@@ -1,0 +1,65 @@
+connector Pin
+  Real v;
+  flow Real i;
+end Pin;
+model Ports0
+  Pin n;
+  Pin p;
+end Ports0;
+model Ports1
+  Pin n1;
+  Pin n2;
+  Pin p1;
+  Pin p2;
+end Ports1;
+model Ports2
+  Pin p;
+end Ports2;
+model Ports3
+  Pin p1;
+  Pin p2;
+  Pin p3;
+end Ports3;
+model Study
+  Ports0 R1;
+  Ports0 R2;
+  Ports2 ground1;
+  Ports2 ground2;
+  Ports3 oLine1;
+  Ports3 oLine2;
+  Ports3 oLine3;
+  Ports3 oLine4;
+  Ports0 srcDistr;
+  Ports0 srcLump;
+  Ports1 tLine1;
+  Ports1 tLine2;
+  Ports1 tLine3;
+  Ports1 tLine4;
+equation
+  connect(oLine1.p1, srcLump.p);
+  connect(tLine1.p1, srcDistr.p);
+  connect(srcDistr.n, tLine1.n1);
+  connect(oLine1.p2, oLine2.p1);
+  connect(oLine2.p2, oLine3.p1);
+  connect(oLine3.p2, oLine4.p1);
+  connect(oLine4.p2, R1.p);
+  connect(tLine2.n1, tLine1.n2);
+  connect(tLine2.p1, tLine1.p2);
+  connect(tLine3.n1, tLine2.n2);
+  connect(tLine3.p1, tLine2.p2);
+  connect(tLine4.n1, tLine3.n2);
+  connect(tLine4.p1, tLine3.p2);
+  connect(srcLump.n, ground1.p);
+  connect(ground1.p, oLine1.p3);
+  connect(ground1.p, oLine2.p3);
+  connect(ground1.p, oLine3.p3);
+  connect(ground1.p, oLine4.p3);
+  connect(ground1.p, R1.n);
+  connect(tLine4.p2, R2.p);
+  connect(tLine4.n2, R2.n);
+  connect(srcDistr.n, ground2.p);
+  connect(ground2.p, tLine2.n2);
+  connect(ground2.p, tLine3.n2);
+  connect(ground2.p, tLine4.n2);
+  connect(ground2.p, tLine1.n2);
+end Study;

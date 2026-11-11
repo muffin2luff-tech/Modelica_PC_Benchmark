@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Pin\n  Real v;\n  flow Real i;\nend Pin;\nmodel Ports0\n  Pin n;\n  Pin p;\nend Ports0;\nmodel Ports1\n  Pin p;\nend Ports1;\nmodel Study\n  Ports0 Capacitor1;\n  Ports1 G;\n  Ports0 HeatingDiode1;\n  Ports0 R;\n  Ports0 SineVoltage1;\nequation\n  connect(HeatingDiode1.p, SineVoltage1.p);\n  connect(SineVoltage1.n, G.p);\n  connect(Capacitor1.n, G.p);\n  connect(HeatingDiode1.n, Capacitor1.p);\n  connect(R.p, Capacitor1.p);\n  connect(R.n, Capacitor1.n);\nend Study;\n```\n\nQuestion:\nList the primitive potential members in the connection set containing Capacitor1.p.v.\n\nTarget:\nCapacitor1.p.v\n\nAnswer format:\nUse unique qualified paths in ascending ASCII order, joined by commas without spaces.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

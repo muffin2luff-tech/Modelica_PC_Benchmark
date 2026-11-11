@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Port\n  Real s;\n  flow Real f;\nend Port;\nmodel PortType0\n  Port flange;\nend PortType0;\nmodel PortType1\n  Port flange_a;\n  Port flange_b;\nend PortType1;\nmodel SensorPorts\n  Port flange_a;\n  Port flange_b;\nequation\n  flange_a.s = flange_b.s;\nend SensorPorts;\nmodel Study\n  SensorPorts forceSensor;\n  SensorPorts multiSensor;\n  PortType1 mass;\n  PortType0 force;\n  PortType0 positionSensor1;\n  PortType0 speedSensor1;\n  PortType0 accSensor1;\n  PortType0 positionSensor2;\nequation\n  connect(forceSensor.flange_a, force.flange);\n  connect(mass.flange_a, positionSensor1.flange);\n  connect(mass.flange_a, speedSensor1.flange);\n  connect(mass.flange_a, accSensor1.flange);\n  connect(mass.flange_b, positionSensor2.flange);\n  connect(forceSensor.flange_b, multiSensor.flange_a);\n  connect(multiSensor.flange_b, mass.flange_a);\nend Study;\n```\n\nQuestion:\nAre forceSensor.flange_a.s,mass.flange_a.s in the same primitive potential connection set? Return true or false.\n\nTarget:\nforceSensor.flange_a.s,mass.flange_a.s\n\nAnswer format:\nUse exactly true or false in the answer string.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

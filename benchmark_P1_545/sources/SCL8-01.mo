@@ -1,0 +1,35 @@
+connector MagneticPort
+  Real V_m;
+  flow Real Phi;
+end MagneticPort;
+model MagneticTwoPort
+  MagneticPort port_p;
+  MagneticPort port_n;
+end MagneticTwoPort;
+model MagneticGround
+  MagneticPort port;
+end MagneticGround;
+model Study
+  MagneticTwoPort excitingCoil;
+  MagneticTwoPort leftLeg;
+  MagneticTwoPort upperYoke;
+  MagneticTwoPort rightLeg;
+  MagneticTwoPort measuringCoil;
+  MagneticTwoPort airGap;
+  MagneticTwoPort lowerYoke;
+  MagneticTwoPort magFluxSensor;
+  MagneticTwoPort leakage;
+  MagneticGround magneticGround;
+equation
+  connect(excitingCoil.port_p, leftLeg.port_p);
+  connect(leftLeg.port_n, upperYoke.port_p);
+  connect(upperYoke.port_n, rightLeg.port_p);
+  connect(rightLeg.port_n, measuringCoil.port_p);
+  connect(measuringCoil.port_n, airGap.port_p);
+  connect(lowerYoke.port_p, airGap.port_n);
+  connect(lowerYoke.port_n, magneticGround.port);
+  connect(excitingCoil.port_n, magFluxSensor.port_n);
+  connect(magFluxSensor.port_p, magneticGround.port);
+  connect(leakage.port_n, airGap.port_n);
+  connect(measuringCoil.port_p, leakage.port_p);
+end Study;

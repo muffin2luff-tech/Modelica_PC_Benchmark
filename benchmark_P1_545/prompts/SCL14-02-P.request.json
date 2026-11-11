@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Pin\n  Real v;\n  flow Real i;\nend Pin;\nmodel Ports0\n  Pin m;\n  Pin m_supply;\n  Pin outp;\n  Pin p;\n  Pin p_supply;\nend Ports0;\nmodel Ports1\n  Pin n;\n  Pin p;\nend Ports1;\nmodel Ports2\n  Pin p;\nend Ports2;\nmodel Study\n  Ports1 constantVoltage;\n  Ports1 constantVoltage1;\n  Ports2 ground;\n  Ports0 opAmp;\n  Ports1 resistor;\n  Ports1 resistor1;\n  Ports1 resistor2;\n  Ports1 sineVoltage;\nequation\n  connect(opAmp.m, resistor.n);\n  connect(resistor1.n, resistor2.p);\n  connect(resistor.p, sineVoltage.p);\n  connect(resistor1.p, opAmp.m);\n  connect(sineVoltage.n, ground.p);\n  connect(opAmp.p, ground.p);\n  connect(resistor2.n, ground.p);\n  connect(opAmp.p_supply, constantVoltage.p);\n  connect(opAmp.m_supply, constantVoltage1.p);\n  connect(constantVoltage.n, constantVoltage1.n);\n  connect(constantVoltage1.n, ground.p);\n  connect(opAmp.outp, resistor2.p);\nend Study;\n```\n\nQuestion:\nList the primitive potential members in the connection set containing opAmp.m.v.\n\nTarget:\nopAmp.m.v\n\nAnswer format:\nUse unique qualified paths in ascending ASCII order, joined by commas without spaces.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

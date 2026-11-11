@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Port\n  Real v;\n  flow Real f;\nend Port;\nmodel DriverCore\n  parameter Real bias=5;\n  parameter Real slope=7;\n  Port p;\n  Real x;\nequation\n  p.v=bias+slope*x;\n  p.f=x;\nend DriverCore;\nmodel TunedDriver\n  extends DriverCore;\nend TunedDriver;\nmodel LoadCore\n  parameter Real gain=4;\n  parameter Real shift=1;\n  parameter Real scale=1;\n  Port p;\n  Real y;\nequation\n  p.v=gain*y+shift;\n  p.f=-scale*y;\nend LoadCore;\nmodel LinkCore\n  parameter Real resistance=2;\n  parameter Real offset=1;\n  Port a;\n  Port b;\nequation\n  a.f+b.f=0;\n  a.v-b.v=resistance*a.f+offset;\nend LinkCore;\nmodel SourceShell\n  Port out;\n  TunedDriver source(bias=7);\nequation\n  connect(out,source.p);\nend SourceShell;\nmodel Study\n  SourceShell source;\n  LinkCore k1(resistance=2,offset=-1);\n  LinkCore k2(resistance=3,offset=0);\n  LinkCore k3(resistance=4,offset=1);\n  LoadCore l1(gain=3,shift=2,scale=1);\n  LoadCore l2(gain=5,shift=-1,scale=2);\n  LoadCore l3(gain=7,shift=3,scale=1);\n  Real result;\nequation\n  result=l1.y;\n  connect(source.out,k1.a);\n  connect(k1.b,k2.a);\n  connect(k2.a,k3.a);\n  connect(k3.a,l3.p);\n  connect(k2.b,l1.p);\n  connect(k3.b,l2.p);\nend Study;\n```\n\nQuestion:\nIn model Study, what is the exact rational value of result? Return an integer or a reduced fraction.\n\nTarget:\nresult\n\nAnswer format:\nUse an integer or a reduced fraction p/q with a positive denominator in the answer string.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

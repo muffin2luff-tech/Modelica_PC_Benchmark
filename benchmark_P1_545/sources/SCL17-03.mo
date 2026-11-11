@@ -1,0 +1,32 @@
+connector Pin
+  Real v;
+  flow Real i;
+end Pin;
+model Ports0
+  Pin Anode;
+  Pin Cathode;
+  Pin Gate;
+end Ports0;
+model Ports1
+  Pin n;
+  Pin p;
+end Ports1;
+model Ports2
+  Pin p;
+end Ports2;
+model Study
+  Ports2 ground;
+  Ports1 inductor;
+  Ports1 pulseCurrent;
+  Ports1 resistor;
+  Ports1 sineVoltage;
+  Ports0 thyristor_v4_1;
+equation
+  connect(sineVoltage.n, ground.p);
+  connect(sineVoltage.p, thyristor_v4_1.Anode);
+  connect(resistor.p, thyristor_v4_1.Cathode);
+  connect(pulseCurrent.n, thyristor_v4_1.Gate);
+  connect(resistor.p, pulseCurrent.p);
+  connect(resistor.n, inductor.p);
+  connect(inductor.n, ground.p);
+end Study;

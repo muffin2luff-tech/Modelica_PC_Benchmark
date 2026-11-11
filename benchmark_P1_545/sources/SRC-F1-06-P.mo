@@ -1,0 +1,33 @@
+connector Pin
+  Real v;
+  flow Real i;
+end Pin;
+model TwoTerminal
+  Pin p;
+  Pin n;
+end TwoTerminal;
+model Amplifier
+  Pin in_n;
+  Pin in_p;
+  Pin out;
+end Amplifier;
+model Ground
+  Pin p;
+end Ground;
+model Study
+  TwoTerminal r1;
+  TwoTerminal r2;
+  TwoTerminal vIn;
+  TwoTerminal vOut;
+  Amplifier opAmp;
+  Ground ground;
+equation
+  connect(r2.n, r1.n);
+  connect(opAmp.in_n, r2.n);
+  connect(opAmp.out, r2.p);
+  connect(opAmp.in_p, ground.p);
+  connect(r1.p, vIn.p);
+  connect(vIn.n, ground.p);
+  connect(vOut.n, ground.p);
+  connect(vOut.p, opAmp.out);
+end Study;

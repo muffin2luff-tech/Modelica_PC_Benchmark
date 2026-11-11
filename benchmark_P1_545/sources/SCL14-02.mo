@@ -1,0 +1,41 @@
+connector Pin
+  Real v;
+  flow Real i;
+end Pin;
+model Ports0
+  Pin m;
+  Pin m_supply;
+  Pin outp;
+  Pin p;
+  Pin p_supply;
+end Ports0;
+model Ports1
+  Pin n;
+  Pin p;
+end Ports1;
+model Ports2
+  Pin p;
+end Ports2;
+model Study
+  Ports1 constantVoltage;
+  Ports1 constantVoltage1;
+  Ports2 ground;
+  Ports0 opAmp;
+  Ports1 resistor;
+  Ports1 resistor1;
+  Ports1 resistor2;
+  Ports1 sineVoltage;
+equation
+  connect(resistor.n, opAmp.m);
+  connect(resistor1.n, resistor2.p);
+  connect(resistor.p, sineVoltage.p);
+  connect(resistor1.p, opAmp.m);
+  connect(sineVoltage.n, ground.p);
+  connect(opAmp.p, ground.p);
+  connect(resistor2.n, ground.p);
+  connect(opAmp.p_supply, constantVoltage.p);
+  connect(opAmp.m_supply, constantVoltage1.p);
+  connect(constantVoltage.n, constantVoltage1.n);
+  connect(constantVoltage1.n, ground.p);
+  connect(opAmp.outp, resistor2.p);
+end Study;

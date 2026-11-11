@@ -1,0 +1,37 @@
+connector Pin
+  Real v;
+  flow Real i;
+end Pin;
+model Device
+  Pin p;
+  Pin n;
+end Device;
+model Ground
+  Pin p;
+end Ground;
+model Transistor
+  Pin b;
+  Pin c;
+  Pin e;
+end Transistor;
+model Triac
+  Pin p;
+  Pin n;
+  Pin g;
+end Triac;
+model Study
+  Device L;
+  Device R;
+  Device V;
+  Ground ground;
+  Triac simpleTriac;
+  Device trapezoidCurrent;
+equation
+  connect(L.n, R.p);
+  connect(R.n, V.p);
+  connect(V.n, ground.p);
+  connect(simpleTriac.p, ground.p);
+  connect(simpleTriac.n, L.p);
+  connect(trapezoidCurrent.n, simpleTriac.g);
+  connect(trapezoidCurrent.p, ground.p);
+end Study;

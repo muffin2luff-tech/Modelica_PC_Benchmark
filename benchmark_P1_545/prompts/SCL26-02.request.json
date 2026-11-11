@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Pin\n  Real v;\n  flow Real i;\nend Pin;\nmodel Device\n  Pin p;\n  Pin n;\nend Device;\nmodel Ground\n  Pin p;\nend Ground;\nmodel Transistor\n  Pin b;\n  Pin c;\n  Pin e;\nend Transistor;\nmodel Triac\n  Pin p;\n  Pin n;\n  Pin g;\nend Triac;\nmodel Study\n  Device L;\n  Device R;\n  Device V;\n  Ground ground;\n  Triac simpleTriac;\n  Device trapezoidCurrent;\nequation\n  connect(L.n, R.p);\n  connect(R.n, V.p);\n  connect(V.n, ground.p);\n  connect(simpleTriac.p, ground.p);\n  connect(simpleTriac.n, L.p);\n  connect(trapezoidCurrent.n, simpleTriac.g);\n  connect(trapezoidCurrent.p, ground.p);\nend Study;\n```\n\nQuestion:\nReturn the canonical signed member vector for the primitive flow connection set containing ground.p.i.\n\nTarget:\nground.p.i\n\nAnswer format:\nUse ascending path:integer entries joined by commas without spaces; coefficients must be primitive, nonzero, and oriented so the first coefficient is positive.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

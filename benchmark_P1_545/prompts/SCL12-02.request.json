@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Pin\n  Real v;\n  flow Real i;\nend Pin;\nmodel TwoPin\n  Pin p;\n  Pin n;\nend TwoPin;\nmodel Ground\n  Pin p;\nend Ground;\nmodel Transistor\n  Pin B;\n  Pin C;\n  Pin E;\nend Transistor;\nmodel Study\n  TwoPin V1;\n  TwoPin R1;\n  TwoPin RI;\n  TwoPin V;\n  TwoPin V2;\n  TwoPin R2;\n  TwoPin C1;\n  TwoPin C2;\n  TwoPin C3;\n  Ground Gnd1;\n  Ground Gnd;\n  Ground Gnd2;\n  Ground Gnd7;\n  Ground Gnd6;\n  Ground Gnd5;\n  Ground Gnd3;\n  Ground Gnd4;\n  Transistor T1;\n  Transistor T2;\nequation\n  connect(Gnd1.p, V1.n);\n  connect(V1.p, R1.p);\n  connect(RI.n, V.p);\n  connect(Gnd.p, V.n);\n  connect(V2.p, R2.p);\n  connect(Gnd2.p, V2.n);\n  connect(Gnd7.p, C1.n);\n  connect(C2.p, RI.p);\n  connect(Gnd6.p, C2.n);\n  connect(C3.p, R2.n);\n  connect(C1.p, R1.n);\n  connect(Gnd5.p, C3.n);\n  connect(T1.B, R1.n);\n  connect(T1.E, Gnd3.p);\n  connect(RI.p, T1.C);\n  connect(T2.B, R2.n);\n  connect(T2.E, Gnd4.p);\n  connect(T2.C, RI.p);\nend Study;\n```\n\nQuestion:\nAre T1.C.v,T2.C.v in the same primitive potential connection set? Return true or false.\n\nTarget:\nT1.C.v,T2.C.v\n\nAnswer format:\nUse exactly true or false in the answer string.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

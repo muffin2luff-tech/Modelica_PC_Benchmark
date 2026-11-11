@@ -1,0 +1,35 @@
+connector Pin
+  Real v;
+  flow Real i;
+end Pin;
+model Ports0
+  Pin n;
+  Pin p;
+end Ports0;
+model Ports1
+  Pin p;
+end Ports1;
+model Study
+  Ports1 Ground1;
+  Ports0 Ideal;
+  Ports0 R1;
+  Ports0 R2;
+  Ports0 R3;
+  Ports0 SineVoltage1;
+  Ports0 SineVoltage2;
+  Ports0 SineVoltage3;
+  Ports0 With_Ron_Goff;
+  Ports0 With_Ron_Goff_Vknee;
+equation
+  connect(Ground1.p, SineVoltage1.n);
+  connect(Ideal.n, R1.p);
+  connect(With_Ron_Goff.n, R2.p);
+  connect(With_Ron_Goff_Vknee.n, R3.p);
+  connect(R1.n, R2.n);
+  connect(R2.n, R3.n);
+  connect(R3.n, Ground1.p);
+  connect(SineVoltage2.p, Ideal.p);
+  connect(SineVoltage2.n, Ground1.p);
+  connect(SineVoltage1.p, With_Ron_Goff.p);
+  connect(With_Ron_Goff_Vknee.p, SineVoltage3.p);
+end Study;

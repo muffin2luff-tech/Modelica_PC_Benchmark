@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Flange\n  Real phi;\n  flow Real tau;\nend Flange;\nmodel Gear\n  Flange support;\n  Flange flange_a;\n  Flange flange_b;\nend Gear;\nmodel Drive\n  Flange support;\n  Flange flange;\nend Drive;\nmodel Fixed\n  Flange flange;\nend Fixed;\nmodel Study\n  Flange boundary;\n  Gear gear;\n  Drive torque;\n  Fixed fixed;\nequation\n  connect(gear.support, fixed.flange);\n  connect(torque.support, fixed.flange);\n  connect(boundary, torque.support);\nend Study;\n```\n\nQuestion:\nWithin the equation scope of model instance Study, return the canonical signed member vector for the primitive flow connection set formed by explicit connect statements in that scope that contains boundary.tau.\n\nTarget:\nboundary.tau\n\nAnswer format:\nUse ascending path:integer entries joined by commas without spaces; coefficients must be primitive, nonzero, and oriented so the first coefficient is positive.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

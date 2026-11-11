@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nmodel SignalSource\nend SignalSource;\nmodel Trapezoid\n  extends SignalSource;\n  parameter Real rising = 0;\n  parameter Real width = 1 / 2;\n  parameter Real falling = 0;\n  parameter Real T_rising = rising;\n  parameter Real T_width = T_rising + width;\n  parameter Real T_falling = T_width + falling;\nend Trapezoid;\nmodel Study\n  extends Trapezoid(rising = 2, width = 3, falling = 4);\nend Study;\n```\n\nQuestion:\nIn model Study, what is the exact rational value of T_falling? Return an integer or a reduced fraction.\n\nTarget:\nT_falling\n\nAnswer format:\nUse an integer or a reduced fraction p/q with a positive denominator in the answer string.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

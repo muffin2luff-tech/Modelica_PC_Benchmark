@@ -1,0 +1,37 @@
+connector Pin
+  Real v;
+  flow Real i;
+end Pin;
+model TwoPin
+  Pin p;
+  Pin n;
+end TwoPin;
+model Ground
+  Pin p;
+end Ground;
+model MOS
+  Pin S;
+  Pin D;
+  Pin B;
+  Pin G;
+end MOS;
+model Study
+  TwoPin Sin;
+  TwoPin V;
+  TwoPin Capacitor1;
+  MOS H_PMOS;
+  MOS H_NMOS;
+  Ground G;
+equation
+  connect(Sin.n, G.p);
+  connect(Capacitor1.n, G.p);
+  connect(H_PMOS.S, H_NMOS.D);
+  connect(H_NMOS.D, Capacitor1.p);
+  connect(H_NMOS.B, H_NMOS.S);
+  connect(H_NMOS.S, G.p);
+  connect(H_PMOS.B, H_PMOS.D);
+  connect(V.p, H_PMOS.D);
+  connect(V.n, G.p);
+  connect(Sin.p, H_NMOS.G);
+  connect(H_PMOS.G, Sin.p);
+end Study;

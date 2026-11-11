@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Port\n  Real v;\n  flow Real i;\nend Port;\nmodel PortType0\n  Port p;\nend PortType0;\nmodel PortType1\n  Port p;\n  Port n;\nend PortType1;\nmodel Study\n  PortType1 sineVoltage;\n  PortType1 inductor1;\n  PortType1 capacitor1;\n  PortType1 resistor1;\n  PortType1 currentSensor1;\n  PortType0 ground1;\n  PortType1 cosineVoltage;\n  PortType1 inductor2;\n  PortType1 capacitor2;\n  PortType1 resistor2;\n  PortType1 currentSensor2;\n  PortType0 ground2;\nequation\n  connect(sineVoltage.p, inductor1.p);\n  connect(inductor1.n, capacitor1.p);\n  connect(capacitor1.n, resistor1.p);\n  connect(sineVoltage.n, ground1.p);\n  connect(currentSensor1.p, resistor1.n);\n  connect(ground1.p, currentSensor1.n);\n  connect(cosineVoltage.p, inductor2.p);\n  connect(inductor2.n, capacitor2.p);\n  connect(capacitor2.n, resistor2.p);\n  connect(cosineVoltage.n, ground2.p);\n  connect(currentSensor2.p, resistor2.n);\n  connect(ground2.p, currentSensor2.n);\nend Study;\n```\n\nQuestion:\nList the primitive potential members in the connection set containing ground1.p.v.\n\nTarget:\nground1.p.v\n\nAnswer format:\nUse unique qualified paths in ascending ASCII order, joined by commas without spaces.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

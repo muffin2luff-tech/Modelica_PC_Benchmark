@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Flange\n  Real phi;\n  flow Real tau;\nend Flange;\nmodel Reference\n  Flange p;\nequation\n  p.phi = 0;\nend Reference;\nmodel Drive\n  parameter Real level = 6;\n  Flange p;\n  Real x;\nequation\n  p.phi = level + x;\n  p.tau = x;\nend Drive;\nmodel GearCore\n  parameter Real ratio = 2;\n  Flange p1;\n  Flange n1;\n  Flange p2;\n  Flange n2;\nequation\n  p1.tau + n1.tau = 0;\n  p2.tau + n2.tau = 0;\n  p1.phi - n1.phi = ratio * ( p2.phi - n2.phi );\n  p2.tau = - ratio * p1.tau;\nend GearCore;\nmodel TunedGear\n  extends GearCore;\nend TunedGear;\nmodel Housing\n  Flange p1;\n  Flange n1;\n  Flange p2;\n  Flange n2;\n  TunedGear gear(ratio = 3);\nequation\n  connect(p1, gear.p1);\n  connect(n1, gear.n1);\n  connect(p2, gear.p2);\n  connect(n2, gear.n2);\nend Housing;\nmodel Compliance\n  parameter Real k = 2;\n  Flange p;\n  Flange n;\nequation\n  p.tau + n.tau = 0;\n  p.phi - n.phi = k * p.tau;\nend Compliance;\nmodel Study\n  Reference ref;\n  Drive drive(level = 6);\n  Housing h;\n  Compliance load(k = 2);\n  Real result;\nequation\n  result = load.p.tau;\n  connect(drive.p, h.p1);\n  connect(ref.p, h.n1);\n  connect(h.p2, load.p);\n  connect(h.n2, load.n);\n  connect(ref.p, load.n);\nend Study;\n```\n\nQuestion:\nIn model Study, what is the exact rational value of result? Return an integer or a reduced fraction.\n\nTarget:\nresult\n\nAnswer format:\nUse an integer or a reduced fraction p/q with a positive denominator in the answer string.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

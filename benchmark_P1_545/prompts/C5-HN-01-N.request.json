@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nmodel BaseCell\n  parameter Real gain = 2;\n  parameter Real offset = gain + 1;\nend BaseCell;\nmodel Cell\n  extends BaseCell;\n  parameter Real outValue = gain * offset;\nend Cell;\nmodel Node\n  parameter Real p = 3;\n  parameter Real q = 4;\n  Cell c(gain = p + q, offset = 2 * p - q);\nend Node;\nmodel System\n  Node n(p = 6, q = 2);\nend System;\nmodel Study\n  System s;\nend Study;\n```\n\nQuestion:\nIn model Study, what is the exact rational value of s.n.c.outValue? Return an integer or a reduced fraction.\n\nTarget:\ns.n.c.outValue\n\nAnswer format:\nUse an integer or a reduced fraction p/q with a positive denominator in the answer string.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

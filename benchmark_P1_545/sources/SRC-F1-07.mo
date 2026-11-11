@@ -1,0 +1,35 @@
+connector Pin
+  Real v;
+  flow Real i;
+end Pin;
+model TwoTerminal
+  Pin p;
+  Pin n;
+end TwoTerminal;
+model Transformer
+  Pin p1;
+  Pin n1;
+  Pin p2;
+  Pin n2;
+end Transformer;
+model Ground
+  Pin p;
+end Ground;
+model Study
+  Transformer basicTransformer;
+  TwoTerminal sineVoltage1;
+  TwoTerminal resistor11;
+  TwoTerminal resistor12;
+  TwoTerminal load1;
+  Ground ground11;
+  Ground ground12;
+equation
+  connect(sineVoltage1.n, ground11.p);
+  connect(sineVoltage1.p, resistor11.p);
+  connect(load1.n, ground12.p);
+  connect(resistor12.n, load1.p);
+  connect(ground11.p, basicTransformer.n1);
+  connect(basicTransformer.n2, ground12.p);
+  connect(basicTransformer.p1, resistor11.n);
+  connect(basicTransformer.p2, resistor12.p);
+end Study;

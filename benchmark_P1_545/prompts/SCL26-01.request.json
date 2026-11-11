@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Pin\n  Real v;\n  flow Real i;\nend Pin;\nmodel Device\n  Pin p;\n  Pin n;\nend Device;\nmodel Ground\n  Pin p;\nend Ground;\nmodel Transistor\n  Pin b;\n  Pin c;\n  Pin e;\nend Transistor;\nmodel Triac\n  Pin p;\n  Pin n;\n  Pin g;\nend Triac;\nmodel Study\n  Device V1;\n  Device V2;\n  Device C1;\n  Device C2;\n  Device C3;\n  Device C4;\n  Device C5;\n  Device I1;\n  Device R1;\n  Device R2;\n  Device R3;\n  Device R4;\n  Ground Gnd1;\n  Ground Gnd2;\n  Ground Gnd3;\n  Ground Gnd4;\n  Ground Gnd5;\n  Ground Gnd6;\n  Ground Gnd7;\n  Ground Gnd8;\n  Ground Gnd9;\n  Transistor Transistor1;\n  Transistor Transistor2;\nequation\n  connect(V1.n, Gnd1.p);\n  connect(C1.n, Gnd2.p);\n  connect(I1.n, Gnd7.p);\n  connect(C5.n, Gnd8.p);\n  connect(C3.n, Gnd5.p);\n  connect(R3.n, Gnd4.p);\n  connect(C2.n, Gnd3.p);\n  connect(C4.p, Gnd6.p);\n  connect(I1.p, C5.p);\n  connect(R1.p, V1.p);\n  connect(R2.p, V2.p);\n  connect(R4.p, V2.p);\n  connect(V2.n, Gnd9.p);\n  connect(R1.n, Transistor1.b);\n  connect(Transistor1.b, C1.p);\n  connect(Transistor1.c, C2.p);\n  connect(R2.n, Transistor1.c);\n  connect(Transistor1.e, I1.p);\n  connect(Transistor2.b, R3.p);\n  connect(Transistor2.b, C3.p);\n  connect(C4.n, Transistor2.c);\n  connect(R4.n, Transistor2.c);\n  connect(C5.p, Transistor2.e);\nend Study;\n```\n\nQuestion:\nList the primitive potential members in the connection set containing Transistor1.c.v.\n\nTarget:\nTransistor1.c.v\n\nAnswer format:\nUse unique qualified paths in ascending ASCII order, joined by commas without spaces.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

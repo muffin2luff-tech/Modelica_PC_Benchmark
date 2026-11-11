@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Pin\n  Real v;\n  flow Real i;\nend Pin;\nmodel TwoTerminal\n  Pin p;\n  Pin n;\nend TwoTerminal;\nmodel Ground\n  Pin p;\nend Ground;\nmodel Study\n  TwoTerminal R1;\n  TwoTerminal R2;\n  TwoTerminal L1;\n  TwoTerminal L2;\n  TwoTerminal C1;\n  TwoTerminal C2;\n  TwoTerminal C3;\n  TwoTerminal C4;\n  TwoTerminal C5;\n  TwoTerminal V;\n  Ground G;\nequation\n  connect(R1.n, C1.p);\n  connect(C1.n, G.p);\n  connect(L1.p, C2.p);\n  connect(L1.p, C1.p);\n  connect(L1.n, C2.n);\n  connect(C2.n, C3.p);\n  connect(C2.n, C4.p);\n  connect(C2.n, L2.p);\n  connect(L2.n, C4.n);\n  connect(C4.n, C5.p);\n  connect(C4.n, R2.p);\n  connect(C1.n, C3.n);\n  connect(C1.n, C5.n);\n  connect(R2.n, C1.n);\n  connect(R1.p, V.p);\n  connect(V.n, G.p);\nend Study;\n```\n\nQuestion:\nAre R1.n.v,C4.n.v in the same primitive potential connection set? Return true or false.\n\nTarget:\nR1.n.v,C4.n.v\n\nAnswer format:\nUse exactly true or false in the answer string.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

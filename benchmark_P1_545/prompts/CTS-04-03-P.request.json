@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Pin\n  Real v;\n  flow Real i;\nend Pin;\nmodel Ref\n  Pin p;\nequation\n  p.v=0;\nend Ref;\nmodel VoltageCore\n  parameter Real level=5;\n  Pin p;\n  Pin n;\nequation\n  p.i+n.i=0;\n  p.v-n.v=level;\nend VoltageCore;\nmodel CurrentCore\n  parameter Real level=3;\n  Pin p;\n  Pin n;\nequation\n  p.i+n.i=0;\n  p.i=level;\nend CurrentCore;\nmodel Ohmic\n  parameter Real r=3;\n  Pin p;\n  Pin n;\nequation\n  p.i+n.i=0;\n  p.v-n.v=r*p.i;\nend Ohmic;\nmodel AmplifierCore\n  parameter Real gain=2;\n  Pin p;\n  Pin n;\n  Pin s;\n  Pin t;\nequation\n  p.i+n.i=0;\n  s.i=0;\n  t.i=0;\n  p.v-n.v=gain*(s.v-t.v);\nend AmplifierCore;\nmodel TransformerCore\n  parameter Real ratio=2;\n  Pin p1;\n  Pin n1;\n  Pin p2;\n  Pin n2;\nequation\n  p1.i+n1.i=0;\n  p2.i+n2.i=0;\n  p1.v-n1.v=ratio*(p2.v-n2.v);\n  p2.i=-ratio*p1.i;\nend TransformerCore;\nmodel TestRes\n  Pin p;\n  Pin n;\nequation\n  p.i+n.i=0;\n  p.v-n.v=4*p.i;\nend TestRes;\nmodel Tuned\n  extends VoltageCore;\nend Tuned;\nmodel Study\n  Ref ref;\n  Tuned drive(level=6);\n  Ohmic r1(r=4);\n  Ohmic r2(r=7);\n  Ohmic r3(r=6);\n  Ohmic r4(r=5);\n  TestRes test;\n  Real result;\nequation\n  result=r4.p.i;\n  connect(ref.p,drive.n);\n  connect(ref.p,r2.n);\n  connect(ref.p,r4.n);\n  connect(r1.n,r2.p);\n  connect(r1.n,test.p);\n  connect(r3.n,r4.p);\n  connect(r3.n,test.n);\n  connect(drive.p,r1.p);\n  connect(drive.p,r3.p);\nend Study;\n```\n\nQuestion:\nIn model Study, what is the exact rational value of result? Return an integer or a reduced fraction.\n\nTarget:\nresult\n\nAnswer format:\nUse an integer or a reduced fraction p/q with a positive denominator in the answer string.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

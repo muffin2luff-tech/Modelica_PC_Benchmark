@@ -1,0 +1,35 @@
+connector HeatPort
+  Real T;
+  flow Real Q_flow;
+end HeatPort;
+model Capacity
+  HeatPort port;
+end Capacity;
+model Conduction
+  HeatPort port_a;
+  HeatPort port_b;
+end Conduction;
+model Convection
+  HeatPort solid;
+  HeatPort fluid;
+end Convection;
+model Study
+  Capacity windingLosses;
+  Capacity coreLosses;
+  Capacity winding;
+  Capacity core;
+  Capacity Twinding;
+  Capacity Tcore;
+  Capacity environment;
+  Conduction winding2core;
+  Convection convection;
+equation
+  connect(windingLosses.port, winding.port);
+  connect(coreLosses.port, core.port);
+  connect(winding.port, winding2core.port_a);
+  connect(winding2core.port_b, core.port);
+  connect(winding.port, Twinding.port);
+  connect(core.port, Tcore.port);
+  connect(winding2core.port_b, convection.solid);
+  connect(convection.fluid, environment.port);
+end Study;

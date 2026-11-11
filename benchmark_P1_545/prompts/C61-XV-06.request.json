@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Flange\n  Real s;\n  flow Real f;\nend Flange;\nmodel Reference\n  Flange p;\nequation\n  p.s=0;\nend Reference;\nmodel Drive\n  parameter Real level=6;\n  Flange p;\n  Real x;\nequation\n  p.s=level+x;\n  p.f=x;\nend Drive;\nmodel Load\n  parameter Real gain=4;\n  parameter Real shift=1;\n  Flange p;\n  Real y;\nequation\n  p.s=gain*y+shift;\n  p.f=-y;\nend Load;\nmodel LeverCore\n  parameter Real ratio=2;\n  Flange left;\n  Flange right;\n  Flange pivot;\nequation\n  left.f+right.f+pivot.f=0;\n  right.f=-ratio*left.f;\n  left.s-pivot.s=ratio*(right.s-pivot.s);\nend LeverCore;\nmodel TunedLever\n  extends LeverCore(ratio=3);\nend TunedLever;\nmodel Housing\n  Flange left;\n  Flange right;\n  Flange pivot;\n  TunedLever lever;\nequation\n  connect(left,lever.left);\n  connect(right,lever.right);\n  connect(pivot,lever.pivot);\nend Housing;\nmodel Study\n  Reference ref;\n  Drive drive(level=6);\n  Load load(gain=4,shift=1);\n  Housing h;\n  Real result;\nequation\n  result=load.y;\n  connect(drive.p,h.left);\n  connect(load.p,h.right);\n  connect(ref.p,h.pivot);\nend Study;\n```\n\nQuestion:\nIn model Study, what is the exact rational value of result? Return an integer or a reduced fraction.\n\nTarget:\nresult\n\nAnswer format:\nUse an integer or a reduced fraction p/q with a positive denominator in the answer string.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Pin\n  Real v;\n  flow Real i;\nend Pin;\nmodel DriverCore\n  parameter Real drive=3;\n  parameter Real slope=1;\n  Pin p;\n  Real x;\nequation\n  p.v=drive+slope*x;\n  p.i=x;\nend DriverCore;\nmodel LoadCore\n  parameter Real gain=5;\n  parameter Real shift=1;\n  Pin p;\n  Real y;\nequation\n  p.v=gain*y+shift;\n  p.i=-y;\nend LoadCore;\nmodel TunedDriver\n  extends DriverCore;\nend TunedDriver;\nmodel Bridge\n  parameter Real offset=1;\n  parameter Real ratio=2;\n  Pin a;\n  Pin b;\n  Real z;\nequation\n  a.v=b.v+offset+ratio*z;\n  a.i=z;\n  b.i=-z;\nend Bridge;\nmodel Study\n  TunedDriver d(drive=5);\n  LoadCore l;\n  DriverCore d2(drive=2, slope=2);\n  Bridge b;\nequation\n  connect(d.p,b.a);\n  connect(d2.p,b.a);\n  connect(b.b,l.p);\nend Study;\n```\n\nQuestion:\nIn model Study, what is the exact rational value of l.y? Return an integer or a reduced fraction.\n\nTarget:\nl.y\n\nAnswer format:\nUse an integer or a reduced fraction p/q with a positive denominator in the answer string.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

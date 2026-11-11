@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nconnector Port\n  Real s;\n  flow Real f;\nend Port;\nmodel PortType0\n  Port flange;\nend PortType0;\nmodel PortType1\n  Port flange_a;\n  Port flange_b;\nend PortType1;\nmodel Study\n  PortType1 outerContactA;\n  PortType1 outerContactB;\n  PortType1 springPlateA;\n  PortType1 springPlateB;\n  PortType1 spring;\n  PortType1 housing;\n  PortType1 rod1;\n  PortType1 rod2;\n  PortType1 rod3;\n  PortType1 rod4;\n  PortType1 innerContactA;\n  PortType1 innerContactB;\n  PortType1 friction;\n  PortType1 spool;\n  PortType0 force;\n  PortType0 fixedLe;\nequation\n  connect(outerContactA.flange_b, springPlateA.flange_a);\n  connect(springPlateA.flange_b, spring.flange_a);\n  connect(spring.flange_b, springPlateB.flange_a);\n  connect(springPlateB.flange_b, outerContactB.flange_a);\n  connect(outerContactB.flange_b, housing.flange_b);\n  connect(springPlateA.flange_b, rod1.flange_a);\n  connect(innerContactA.flange_a, rod3.flange_a);\n  connect(innerContactA.flange_b, rod1.flange_b);\n  connect(rod2.flange_a, innerContactB.flange_a);\n  connect(rod4.flange_b, innerContactB.flange_b);\n  connect(friction.flange_b, rod3.flange_a);\n  connect(rod3.flange_b, rod4.flange_a);\n  connect(rod2.flange_b, springPlateB.flange_a);\n  connect(spool.flange_a, rod4.flange_a);\n  connect(force.flange, spool.flange_a);\n  connect(outerContactA.flange_a, fixedLe.flange);\n  connect(housing.flange_a, fixedLe.flange);\n  connect(friction.flange_a, fixedLe.flange);\nend Study;\n```\n\nQuestion:\nList the primitive potential members in the connection set containing springPlateA.flange_b.s.\n\nTarget:\nspringPlateA.flange_b.s\n\nAnswer format:\nUse unique qualified paths in ascending ASCII order, joined by commas without spaces.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "content": "Answer the supplied Modelica semantic question. Return exactly one JSON object with no surrounding text: {\"answer\":\"...\"}. The answer value must be a string. Do not include an explanation.",
+      "role": "system"
+    },
+    {
+      "content": "Modelica source:\n```modelica\nmodel EddyCurrent\n  parameter Real rho;\n  parameter Real l = 1;\n  parameter Real A = 1;\n  parameter Real R = rho * l / A;\nend EddyCurrent;\nmodel Study\n  extends EddyCurrent(rho = 2, l = 3, A = 4);\nend Study;\n```\n\nQuestion:\nIn model Study, what is the exact rational value of R? Return an integer or a reduced fraction.\n\nTarget:\nR\n\nAnswer format:\nUse an integer or a reduced fraction p/q with a positive denominator in the answer string.\nReturn exactly {\"answer\":\"...\"}.",
+      "role": "user"
+    }
+  ],
+  "response_format": {
+    "json_schema": {
+      "name": "asce_answer",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "answer"
+        ],
+        "type": "object"
+      },
+      "strict": true
+    },
+    "type": "json_schema"
+  }
+}

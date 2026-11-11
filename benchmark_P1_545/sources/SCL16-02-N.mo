@@ -1,0 +1,41 @@
+connector Pin
+  Real v;
+  flow Real i;
+end Pin;
+model Ports0
+  Pin in_n;
+  Pin in_p;
+  Pin out;
+end Ports0;
+model Ports1
+  Pin n;
+  Pin p;
+end Ports1;
+model Ports2
+  Pin p;
+end Ports2;
+model Study
+  Ports1 c;
+  Ports2 ground;
+  Ports0 opAmp1;
+  Ports0 opAmp2;
+  Ports1 r;
+  Ports1 r1;
+  Ports1 r2;
+  Ports1 vOutRectangle;
+  Ports1 vOutTriangle;
+equation
+  connect(opAmp1.in_p, r2.p);
+  connect(opAmp1.in_n, ground.p);
+  connect(opAmp1.out, r.p);
+  connect(r.n, c.n);
+  connect(c.p, opAmp2.out);
+  connect(ground.p, opAmp2.in_p);
+  connect(c.n, opAmp2.in_n);
+  connect(r2.p, r1.p);
+  connect(opAmp2.out, r1.n);
+  connect(opAmp1.out, vOutRectangle.p);
+  connect(ground.p, vOutRectangle.n);
+  connect(opAmp2.out, vOutTriangle.p);
+  connect(ground.p, vOutTriangle.n);
+end Study;
