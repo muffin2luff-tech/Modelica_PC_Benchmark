@@ -1,0 +1,8 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "# Qa1eb2806115a\n\n```modelica\ntype Ref\n  extends Real;\n  function equalityConstraint\n    input Ref a;\n    input Ref b;\n    output Real residue[0];\n  algorithm\n    residue := fill(0.0, 0);\n  end equalityConstraint;\nend Ref;\n\nconnector Port\n  Ref r;\nend Port;\n\nmodel Study\n  Port a[2];\n  Port b[2];\n  Integer result;\nequation\n  connect(b[1], a[1]);\n  connect(b[2], a[2]);\n  Connections.uniqueRoot(a[1].r, \"roots\");\n  Connections.uniqueRoot(a[2].r, \"roots\");\n  a[2].r = 2;\n  a[1].r = 1;\n  result = (if Connections.isRoot(a[2].r) then 1 else 0)\n         + 10*(if Connections.isRoot(a[1].r) then 1 else 0);\nend Study;\n```\n\nWhat is the exact integer value of Study.result after connection-graph resolution? Return an integer.\n"
+    }
+  ]
+}

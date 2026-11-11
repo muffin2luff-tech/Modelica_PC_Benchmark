@@ -1,0 +1,8 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "# Q2e3657933f87\n\n```modelica\nconnector Port\n  Integer p;\n  flow Boolean f;\nend Port;\nmodel Study\n  Port a;\n  Port b;\n  Boolean result;\nequation\n  connect(a, b);\n  a.p = 0;\n  a.f = true;\n  result = b.f;\nend Study;\n```\n\nUnder Modelica 3.7, is model Study legal? If legal, give the exact value of Study.result. Return exactly `LEGAL; <value>` or `ILLEGAL`.\n"
+    }
+  ]
+}

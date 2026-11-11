@@ -1,0 +1,8 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "# Q1f0a1b6d314e\n\n```modelica\nmodel Consumer\n  outer Real signal;\n  Real y = signal;\nend Consumer;\n\nmodel Layer\n  inner outer Real signal = 1 + signal + 2;\n  Consumer c;\n  Real y = c.y;\nend Layer;\n\nmodel Study\n  inner Real signal = 10;\n  Layer layer;\n  Real result = layer.y;\nend Study;\n```\n\nWhat is the exact value of Study.result? Return an integer or a reduced fraction.\n"
+    }
+  ]
+}

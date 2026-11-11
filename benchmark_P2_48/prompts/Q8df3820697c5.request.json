@@ -1,0 +1,8 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "# Q8df3820697c5\n\n```modelica\npartial model Root\n  replaceable Real x;\nend Root;\n\npartial model Mid\n  extends Root(redeclare replaceable parameter Real x);\nend Mid;\n\nmodel Study\n  extends Mid(x = 5);\n  Real result = x;\nend Study;\n```\n\nWhat is the exact value of Study.result at t = 2 s? Return an integer or a reduced fraction.\n"
+    }
+  ]
+}

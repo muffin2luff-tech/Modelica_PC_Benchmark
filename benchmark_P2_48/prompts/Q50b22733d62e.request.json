@@ -1,0 +1,8 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "# Q50b22733d62e\n\n```modelica\nfunction Pick\n  output Integer y;\nprotected\n  Integer v[1];\nalgorithm\n  v := {0};\n  v[1] := 2;\n  v[1] := 3;\n  y := v[1];\nend Pick;\nmodel Study\n  Integer result = Pick();\nend Study;\n```\n\nWhat is the exact value of Study.result after the initialization algorithm completes? Return an integer.\n"
+    }
+  ]
+}

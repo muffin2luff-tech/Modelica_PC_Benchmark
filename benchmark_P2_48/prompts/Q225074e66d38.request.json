@@ -1,0 +1,8 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "# Q225074e66d38\n\n```modelica\nmodel Study\n  Real u;\n  Real x(start = 0);\n  Real result;\nequation\n  u = if time < 0.5 then 5 else 9;\n  x = sample(u, Clock(1, 1));\n  result = hold(x);\nend Study;\n```\n\nWhat is the exact value of Study.result immediately after the second clock activation at t = 1 s? Return an integer or a reduced fraction.\n"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "# Qce0800aac28d\n\n```modelica\nmodel Study\n  Integer intervalCounter(start = 2);\n  Real result(start = 0);\nequation\n  when Clock(intervalCounter, 1) then\n    intervalCounter = previous(intervalCounter) + 1;\n    result = interval();\n  end when;\nend Study;\n```\n\nWhat is the exact value of Study.result immediately after the second clock activation at t = 3 s? Return an integer or a reduced fraction.\n"
+    }
+  ]
+}

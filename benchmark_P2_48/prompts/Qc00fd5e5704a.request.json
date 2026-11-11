@@ -1,0 +1,8 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "# Qc00fd5e5704a\n\n```modelica\nblock StateA\n  output Integer status;\nequation\n  status = ticksInState();\nend StateA;\nblock StateB\nend StateB;\nmodel Study\n  StateA a;\n  StateB b;\n  Real ct;\n  Integer result;\nequation\n  ct = sample(time, Clock(1, 1));\n  initialState(a);\n  transition(a, b, ct > 100, reset = false);\n  result = a.status;\nend Study;\n```\n\nUnder Modelica 3.7, is model Study legal? If legal, give the exact value of Study.result immediately after the third clock activation at t = 2 s. Return exactly `LEGAL; <integer>` or `ILLEGAL`.\n"
+    }
+  ]
+}

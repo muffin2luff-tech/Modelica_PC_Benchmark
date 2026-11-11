@@ -1,0 +1,8 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "# Q05e0edc927c5\n\n```modelica\nmodel Base\n  parameter Real n;\n  parameter Real bias = 1;\n  parameter Real score = n + bias;\nend Base;\n\nmodel ImplA\n  extends Base;\n  parameter Real extra = 2;\nend ImplA;\n\nmodel ImplB\n  extends Base;\n  parameter Real extra = 4;\nend ImplB;\n\nmodel Holder\n  replaceable ImplA comp constrainedby Base(n = 5);\nend Holder;\n\nmodel Study\n  extends Holder(redeclare ImplA comp(extra = 7));\n  parameter Real result = comp.score;\nend Study;\n```\n\nWhat is the exact value of Study.result? Return an integer or a reduced fraction.\n"
+    }
+  ]
+}

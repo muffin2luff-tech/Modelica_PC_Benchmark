@@ -1,0 +1,8 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "# Q018e251e9da1\n\n```modelica\nconnector IntOut = output Integer;\nconnector IntIn = input Integer;\n\nblock AState\n  IntOut y;\nequation\n  y = 11;\nend AState;\n\nblock BState\n  IntOut y;\nequation\n  y = 22;\nend BState;\n\nblock Sink\n  IntIn u;\n  output Integer y;\nequation\n  y = u;\nend Sink;\n\nmodel Study\n  BState b;\n  AState a;\n  Sink sink;\n  Real ct;\n  Integer result;\nequation\n  ct = sample(time, Clock(1, 1));\n  initialState(a);\n  transition(a, b, not (ct < 1), reset = false);\n  connect(b.y, sink.u);\n  connect(a.y, sink.u);\n  result = sink.y;\nend Study;\n```\n\nUnder Modelica 3.7, is model Study legal? If legal, give the exact value of Study.result immediately after the second clock activation at t = 1 s. Return exactly `LEGAL; <integer>` or `ILLEGAL`.\n"
+    }
+  ]
+}
