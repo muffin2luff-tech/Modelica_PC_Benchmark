@@ -44,7 +44,7 @@ ASCE supports multiple information conditions:
 
 ## API Example
 
-[`examples/`](examples/README.md) contains a minimal, standard-library client
+[`scripts/`](scripts/README.md) contains a minimal, standard-library client
 for sending one stored JSON prompt to an OpenAI-compatible Chat Completions
 endpoint. It forwards the selected question only and does not include Gold,
 scoring, Oracle, or experiment records.
