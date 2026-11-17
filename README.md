@@ -41,3 +41,10 @@ ASCE supports multiple information conditions:
 - **Z1 — Rule Guidance:** Additional relevant Modelica specification rules.
 - **Z2 — Compiler Metadata:** Limited compiler-provided metadata.
 - **Z3 — Compiler Connection Equations:** Compiler-provided connection equations for selected cross-mechanism tasks.
+
+## API Example
+
+[`examples/`](examples/README.md) contains a minimal, standard-library client
+for sending one stored JSON prompt to an OpenAI-compatible Chat Completions
+endpoint. It forwards the selected question only and does not include Gold,
+scoring, Oracle, or experiment records.
